@@ -30,9 +30,9 @@ Route::get('/test-api',function (){
    return ['a'=>'ssss'];
 });
 
-Route::group(['middleware' => 'auth.apikey'], function() {
+Route::group([], function() {
     Route::get('/categories', [CategoryController::class, 'index']);
-    Route::get('/categories/{category_id}/wallpapers', [CategoryController::class, 'getWallpapers']);
+    Route::get('/categories/popular', [CategoryController::class, 'getPopulared']);
 
     Route::get('/wallpaper-detail/{id}/{device_id}', [WallpaperController::class, 'show']);
     Route::get('/wallpapers/featured', [WallpaperController::class, 'getFeatured']);
