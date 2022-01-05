@@ -12,7 +12,7 @@
                         alt="User avatar"
                     />
                     <div class="user-info text-center">
-                        <a href="//{{$site->site_name}}" target="_blank" >
+                        <a href="//{{$site->web_site}}" target="_blank" >
                             <h3>{{$site->site_name}}</h3>
                         </a>
                     </div>
