@@ -1,0 +1,8 @@
+version: '3.1'
+services:
+
+  php74:
+    build: .docker/php74
+    working_dir: /application
+    volumes:
+      - .:/application:cached
