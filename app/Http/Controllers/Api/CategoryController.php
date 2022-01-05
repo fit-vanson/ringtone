@@ -15,13 +15,15 @@ class CategoryController extends Controller
 {
     public function index()
     {
+
         $domain=$_SERVER['SERVER_NAME'];
+
         if(checkBlockIp()){
             $data = SiteManage::with('category')
                 ->leftJoin('categories_has_site', 'categories_has_site.site_id', '=', 'sites.id')
                 ->leftJoin('categories', 'categories.id', '=', 'categories_has_site.category_id')
-                ->where('site_name',$domain)
-                ->where('categories_has_site.turn_to_fake_cate',1)
+                ->where('web_site',$domain)
+                ->where('categories.turn_to_fake_cate',1)
                 ->get();
             return CategoryResource::collection($data);
 
@@ -29,21 +31,30 @@ class CategoryController extends Controller
             $data = SiteManage::with('category')
                 ->leftJoin('categories_has_site', 'categories_has_site.site_id', '=', 'sites.id')
                 ->leftJoin('categories', 'categories.id', '=', 'categories_has_site.category_id')
-                ->where('site_name',$domain)
-                ->where('categories_has_site.turn_to_fake_cate',0)
+                ->where('web_site',$domain)
+                ->where('categories.turn_to_fake_cate',0)
                 ->get();
             return CategoryResource::collection($data);
         }
     }
-    public function getPopulared($id)
+    public function getPopulared()
     {
         $domain=$_SERVER['SERVER_NAME'];
-
         if (checkBlockIp()){
-            $data = CategoryManage::where('view_count','>=',10)->where('turn_to_fake_cate','=', 1)
+            $data = SiteManage::with('category')
+                ->leftJoin('categories_has_site', 'categories_has_site.site_id', '=', 'sites.id')
+                ->leftJoin('categories', 'categories.id', '=', 'categories_has_site.category_id')
+                ->where('web_site',$domain)
+                ->where('categories.turn_to_fake_cate',1)
+                ->where('view_count','>=',10)
                 ->orderBy('view_count','desc')->get();
         }else{
-            $data = CategoryManage::where('view_count','>=',10)->where('turn_to_fake_cate','=', 0)
+            $data = SiteManage::with('category')
+                ->leftJoin('categories_has_site', 'categories_has_site.site_id', '=', 'sites.id')
+                ->leftJoin('categories', 'categories.id', '=', 'categories_has_site.category_id')
+                ->where('web_site',$domain)
+                ->where('categories.turn_to_fake_cate',0)
+                ->where('view_count','>=',10)
                 ->orderBy('view_count','desc')->get();
         }
         return CategoryResource::collection($data);

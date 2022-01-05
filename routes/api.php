@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FavoriteController;
-use App\Http\Controllers\Api\WallpaperController;
+use App\Http\Controllers\Api\RingtoneController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -30,18 +31,23 @@ Route::get('/test-api',function (){
    return ['a'=>'ssss'];
 });
 
-Route::group([], function() {
+Route::group([ ], function() {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/popular', [CategoryController::class, 'getPopulared']);
 
-    Route::get('/wallpaper-detail/{id}/{device_id}', [WallpaperController::class, 'show']);
-    Route::get('/wallpapers/featured', [WallpaperController::class, 'getFeatured']);
-    Route::get('/wallpapers/popular', [WallpaperController::class, 'getPopulared']);
-    Route::get('/wallpapers/newest', [WallpaperController::class, 'getNewest']);
+    Route::get('categories/{category_id}/ringtones/{deviceId}', [RingtoneController::class, 'getRingtonesByCate']);
+    Route::get('ringtone-detail/{id}/{device_id}', [RingtoneController::class, 'show']);
+    Route::get('ringtones/featured', [RingtoneController::class, 'getFeatured']);
+    Route::get('ringtones/popular/{deviceId}', [RingtoneController::class, 'getPopulared']);
+    Route::get('ringtones/newest/{deviceId}', [RingtoneController::class, 'getNewest']);
+    Route::get('ringtones/premium', [RingtoneController::class, 'getPremium']);
+    Route::get('ringtones/most-download/{deviceId}', [RingtoneController::class, 'getMostDownload']);
 
 
-    Route::post('/wallpaper-favorite', [FavoriteController::class, 'likeWallpaper']);
-    Route::post('/wallpaper-favorite-unsaved', [FavoriteController::class, 'disLikeWallpaper']);
-    Route::get('/favorite/{device_id}', [FavoriteController::class, 'getSaved']);
+    Route::post('ringtone-favorite/', [FavoriteController::class, 'likeRingtone']);
+    Route::post('ringtone-favorite-unsaved/', [FavoriteController::class, 'disLikeRingtone']);
+    Route::get('favorite/{device_id}', [FavoriteController::class, 'getSaved']);
+
+    Route::post('search', [FavoriteController::class, 'search']);
 });
 

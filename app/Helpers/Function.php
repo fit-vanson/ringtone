@@ -35,7 +35,8 @@ function checkBlockIp(){
         $ipaddress= $_SERVER["HTTP_CF_CONNECTING_IP"];
     else
         $ipaddress = 'UNKNOWN';
-    $site = SiteManage::with('blockIps')->where('site_name',$domain)->first();
+    $site = SiteManage::with('blockIps')->where('web_site',$domain)->first();
+
 
 //    $blockIps= BlockIp::all();
     $block=false;
