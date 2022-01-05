@@ -78,7 +78,7 @@ class RingtoneController extends Controller
             $ipaddress = 'UNKNOWN';
         $listIp=ListIp::where('ip_address',$ipaddress)->first();
 
-        $site=SiteManage::where('site_name',$domain)->first();
+        $site=SiteManage::where('web_site',$domain)->first();
 
         if(!$listIp){
             ListIp::create([
@@ -92,7 +92,8 @@ class RingtoneController extends Controller
                 ]);
             }
         }
-        $load_feature=$site->load_view_by;
+
+        $load_feature=$site->load_home_features;
         $isFake = 0;
         if (checkBlockIp()) {
             $isFake = 1;
@@ -100,28 +101,28 @@ class RingtoneController extends Controller
             if($load_feature ==0){
                 $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                     ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
-                    ->where('site_name',$domain)
+                    ->where('web_site',$domain)
                     ->where('categories.turn_to_fake_cate',$isFake)
-                    ->select('tbl_category_manages.*')
+                    ->select('categories.*')
                     ->inRandomOrder()->get();
             }elseif($load_feature ==1){
                 $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                     ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
-                    ->where('site_name',$domain)
+                    ->where('web_site',$domain)
                     ->where('categories.turn_to_fake_cate',$isFake)
-                    ->select('tbl_category_manages.*')
+                    ->select('categories.*')
                     ->orderBy('order', 'desc')->get();
-                $getResource= FeatureWallpaperResource::collection($data);
+
             }elseif($load_feature ==2){
                 $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                     ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
-                    ->where('site_name',$domain)
+                    ->where('web_site',$domain)
                     ->where('categories.turn_to_fake_cate',$isFake)
-                    ->select('tbl_category_manages.*')
+                    ->select('categories.*')
                     ->orderBy('view_count', 'desc')->get();
-                $getResource= FeatureWallpaperResource::collection($data);
             }
         }
+        $getResource= CategoryResource::collection($data);
         return response()->json([
             'message'=>'save ip successs',
             'ad_switch'=>$site->ad_switch,
@@ -157,8 +158,8 @@ class RingtoneController extends Controller
                 ->whereHas('categories', function ($q) use ($domain) {
                     $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                         ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
-                        ->where('site_name',$domain)
-                        ->where('turn_to_fake_cate','=', 0);
+                        ->where('web_site',$domain)
+                        ->where('turn_to_fake_cate','=', 1);
                 })
                 ->paginate(70);
         }else{
@@ -167,8 +168,8 @@ class RingtoneController extends Controller
                 ->whereHas('categories', function ($q) use ($domain) {
                     $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                         ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
-                        ->where('site_name',$domain)
-                        ->where('turn_to_fake_cate','=', 1);
+                        ->where('web_site',$domain)
+                        ->where('turn_to_fake_cate','=', 0);
                 })
                 ->paginate(70);
         }

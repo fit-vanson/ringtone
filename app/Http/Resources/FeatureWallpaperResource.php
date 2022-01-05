@@ -14,7 +14,7 @@ class FeatureWallpaperResource extends JsonResource
      */
     public function toArray($request)
     {
-        foreach ($this->ringtones->take(1) as $item){
+        foreach ($this->ringtones()->take(1) as $item){
             return [
                 'categories' =>
                     CategoryResource::collection($item->categories),

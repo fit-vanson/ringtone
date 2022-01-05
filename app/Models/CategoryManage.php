@@ -26,11 +26,10 @@ class CategoryManage extends Model
     {
         static::deleting(function ($category) {
             $ringtone = $category->ringtone()->get();
-//            dd($walpapers->pluck('id')->toArray());
             $sites = $category->site()->get();
 
             if ($ringtone->isNotEmpty()) {
-                $category->wallpaper()->detach();
+                $category->ringtone()->detach();
                 $defaultCategory = static::find(1);
                 $defaultCategory->ringtone()->sync($ringtone->pluck('id')->toArray(),false);
             }
