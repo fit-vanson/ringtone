@@ -96,6 +96,29 @@ class RingtoneController extends Controller
         $isFake = 0;
         if (checkBlockIp()) {
             $isFake = 1;
+            if($load_feature ==0){
+                $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                    ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                    ->where('web_site',$domain)
+                    ->where('categories.turn_to_fake_cate',$isFake)
+                    ->select('categories.*')
+                    ->inRandomOrder()->get();
+            }elseif($load_feature ==1){
+                $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                    ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                    ->where('web_site',$domain)
+                    ->where('categories.turn_to_fake_cate',$isFake)
+                    ->select('categories.*')
+                    ->orderBy('order', 'desc')->get();
+
+            }elseif($load_feature ==2){
+                $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                    ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                    ->where('web_site',$domain)
+                    ->where('categories.turn_to_fake_cate',$isFake)
+                    ->select('categories.*')
+                    ->orderBy('view_count', 'desc')->get();
+            }
         } else {
             if($load_feature ==0){
                 $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
