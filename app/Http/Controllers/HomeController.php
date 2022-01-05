@@ -29,7 +29,7 @@ class HomeController extends Controller
     }
     public function show(){
         $domain=$_SERVER['SERVER_NAME'];
-        $site = SiteManage::where('site_name',$domain)->first();
+        $site = SiteManage::where('web_site',$domain)->first();
         if($site){
             $images=FeatureImage::where('site_id',$site->id)->get();
             return view('content.index')->with(compact('images','site'));
@@ -40,7 +40,7 @@ class HomeController extends Controller
     }
     public function policy(){
         $domain=$_SERVER['SERVER_NAME'];
-        $site = SiteManage::where('site_name',$domain)->first();
+        $site = SiteManage::where('web_site',$domain)->first();
         if($site){
             return view('content.policy')->with(compact('site'));
         }
