@@ -21,7 +21,6 @@ class RingtoneController extends Controller
 {
     public function show($id,$device_id)
     {
-
         $ringtone = Ringtone::findOrFail($id);
         $ringtone->increment('view_count');
         $visitorFavorite = VisitorFavorite::where([
@@ -144,6 +143,33 @@ class RingtoneController extends Controller
                     ->where('turn_to_fake_cate','=', $isFake);
             })
             ->paginate(70);
+        $ringtones = $this->checkLikedToRingtones($deviceId, $data);
+        $getResource=RingtoneResource::collection($ringtones);
+        return $getResource;
+    }
+
+    public function getNewest($deviceId)
+    {
+        $domain=$_SERVER['SERVER_NAME'];
+        if (checkBlockIp()){
+            $data = Ringtone::orderBy('created_at','desc')
+                ->whereHas('categories', function ($q) use ($domain) {
+                    $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                        ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                        ->where('web_site',$domain)
+                        ->where('turn_to_fake_cate','=', 1);
+                })
+                ->paginate(70);
+        }else {
+            $data = Ringtone::orderBy('created_at','desc')
+                ->whereHas('categories', function ($q) use ($domain) {
+                    $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                        ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                        ->where('web_site',$domain)
+                        ->where('turn_to_fake_cate','=', 0);
+                })
+                ->paginate(70);
+        }
         $ringtones = $this->checkLikedToRingtones($deviceId, $data);
         $getResource=RingtoneResource::collection($ringtones);
         return $getResource;
