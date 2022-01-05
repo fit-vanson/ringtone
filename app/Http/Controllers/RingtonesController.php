@@ -187,25 +187,18 @@ class RingtonesController extends Controller
     }
     public function delete($id)
     {
-        $wallpaper = Wallpapers::find($id);
-        $path_thumbnail =   storage_path('app/public/wallpapers/thumbnail/').$wallpaper->thumbnail_image;
-        $path_detail    =   storage_path('app/public/wallpapers/detail/').$wallpaper->image;
-        $path_origin    =   storage_path('app/public/wallpapers/download/').$wallpaper->origin_image;
+        $ringtone = Ringtone::find($id);
+        $pathRemove    =   storage_path('app/public/ringtones/').$ringtone->ringtone_file;
         try {
-            if(file_exists($path_thumbnail)){
-                unlink($path_thumbnail);
-            }
-            if(file_exists($path_detail)){
-                unlink($path_detail);
-            }
-            if(file_exists($path_origin)){
-                unlink($path_origin);
+
+            if(file_exists($pathRemove)){
+                unlink($pathRemove);
             }
         }catch (Exception $ex) {
             Log::error($ex->getMessage());
         }
-        $wallpaper->category()->detach();
-        $wallpaper->delete();
+        $ringtone->categories()->detach();
+        $ringtone->delete();
 
         return response()->json(['success'=>'Xóa thành công.']);
     }
