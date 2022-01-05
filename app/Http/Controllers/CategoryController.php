@@ -167,7 +167,6 @@ class CategoryController extends Controller
         }
 
         if($request->image){
-
             $path_Remove =   storage_path('app/public/categories/').$data->image;
             if(file_exists($path_Remove)){
                 unlink($path_Remove);

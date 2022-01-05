@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $pageConfigs = ['pageHeader' => false];
-        if($user->hasRole('Admin')){
+        if($user->hasRole('admin')){
             $users = $this->user->all();
             $roles = $this->role->all();
             return view('content.user.index', ['pageConfigs' => $pageConfigs,'users'=>$users,'roles'=>$roles]);
