@@ -157,7 +157,7 @@ class RingtoneController extends Controller
                     $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                         ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
                         ->where('web_site',$domain)
-                        ->where('turn_to_fake_cate','=', 0);
+                        ->where('turn_to_fake_cate','=', 1);
                 })
                 ->paginate(70);
         }else {
@@ -166,7 +166,7 @@ class RingtoneController extends Controller
                     $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                         ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
                         ->where('web_site',$domain)
-                        ->where('turn_to_fake_cate','=', 1);
+                        ->where('turn_to_fake_cate','=', 0);
                 })
                 ->paginate(70);
         }
