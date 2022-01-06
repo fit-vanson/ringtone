@@ -9,6 +9,7 @@ use App\Models\CategoryManage;
 use App\Models\Ringtone;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class SearchController extends Controller
 {
@@ -88,6 +89,7 @@ class SearchController extends Controller
                     ->get();
             }
         }
+        Log::error($cate);
         return [
             'cates_result' =>  CategoryResource::collection($cate),
             'ringtones_result' => RingtoneResource::collection($ringtones)
