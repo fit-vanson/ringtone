@@ -163,7 +163,7 @@ class RingtoneController extends Controller
             ->whereHas('categories', function ($q) use ($domain, $isFake) {
                 $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                     ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
-                    ->where('site_name',$domain)
+                    ->where('web_site',$domain)
                     ->where('turn_to_fake_cate','=', $isFake);
             })
             ->paginate(70);
@@ -234,7 +234,7 @@ class RingtoneController extends Controller
             ->whereHas('categories', function ($q) use ($domain, $isFake) {
                 $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                     ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
-                    ->where('site_name',$domain)
+                    ->where('web_site',$domain)
                     ->where('turn_to_fake_cate','=', $isFake);
             })
             ->paginate(70);

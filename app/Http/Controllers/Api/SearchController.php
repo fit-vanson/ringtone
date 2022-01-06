@@ -23,7 +23,7 @@ class SearchController extends Controller
                 ->whereHas('categories', function ($q) use ($domain, $isFake) {
                     $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                         ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
-                        ->where('site_name',$domain)
+                        ->where('web_site',$domain)
                         ->where('turn_to_fake_cate','=', $isFake);
                 })
                 ->take(20)
@@ -32,7 +32,7 @@ class SearchController extends Controller
                 $ringtones=Ringtone::whereHas('categories', function ($q) use ($domain, $isFake) {
                     $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                         ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
-                        ->where('site_name',$domain)
+                        ->where('web_site',$domain)
                         ->where('turn_to_fake_cate','=', $isFake);
                 })
                     ->take(20)
@@ -54,11 +54,12 @@ class SearchController extends Controller
                     ->get();
             }
         }else{
-            $ringtones= Ringtone::where('name', 'like', '%' . $query . '%')
+            $ringtones= Ringtone::
+            where('name', 'like', '%' . $query . '%')
                 ->whereHas('categories', function ($q) use ($domain, $isFake) {
                     $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                         ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
-                        ->where('site_name',$domain)
+                        ->where('web_site',$domain)
                         ->where('turn_to_fake_cate','=', $isFake);
                 })
                 ->take(20)
@@ -67,7 +68,7 @@ class SearchController extends Controller
                 $ringtones=Ringtone::whereHas('categories', function ($q) use ($domain, $isFake) {
                     $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                         ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
-                        ->where('site_name',$domain)
+                        ->where('web_site',$domain)
                         ->where('turn_to_fake_cate','=', $isFake);
                 })
                     ->take(20)
@@ -89,6 +90,7 @@ class SearchController extends Controller
                     ->get();
             }
         }
+        dd($ringtones);
         Log::error('Ring : '.$ringtones);
         Log::error('Cate: '.$cate);
         Log::error($request->all());
