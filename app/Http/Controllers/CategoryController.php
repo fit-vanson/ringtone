@@ -60,7 +60,6 @@ class CategoryController extends Controller
             ->skip($start)
             ->take($rowperpage)
             ->get();
-//        dd($records);
         $data_arr = array();
         foreach ($records as $key => $record) {
             $image_count = '<a href="/admin/ringtones?category='.$record->name.'"> <span>'.$record->ringtone->count().'</span></a>';
