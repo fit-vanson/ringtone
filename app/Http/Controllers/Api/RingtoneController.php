@@ -246,44 +246,91 @@ class RingtoneController extends Controller
 //        try{
         $domain=$_SERVER['SERVER_NAME'];
         $sort = SiteManage::where('web_site',$domain)->first();
+//        dd($sort->load_wallpapers);
         switch ($sort->load_wallpapers){
             case 0:
-                $data = Category::findOrFail($id)
-                    ->ringtones()
-                    ->inRandomOrder()
+                $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                    ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                    ->where('web_site',$domain)
+                    ->where('categories.id',$id)
+                    ->select('categories.*')
+                    ->with('ringtone')
                     ->paginate(70);
+                break;
+//                $data = Category::findOrFail($id)
+//                    ->ringtones()
+//                    ->inRandomOrder()
+//                    ->paginate(70);
             case 1:
-                $data = Category::findOrFail($id)
-                    ->ringtones()
-                    ->orderBy('like_count', 'desc')
-                    ->paginate(70);
+//                dd(1);
+                $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                    ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                    ->where('web_site',$domain)
+                    ->where('categories.id',$id)
+                    ->select('categories.*')
+                    ->with('ringtone')
+                    ->paginate(70)->sortByDesc('like_count');
+
+//                $data = Category::findOrFail($id)
+//                    ->ringtones()
+//                    ->orderBy('like_count', 'desc')
+//                    ->paginate(70);
                 break;
             case 2:
-                $data = Category::findOrFail($id)
-                    ->ringtones()
-                    ->orderBy('view_count', 'desc')
-                    ->paginate(70);
+                $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                    ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                    ->where('web_site',$domain)
+                    ->where('categories.id',$id)
+                    ->select('categories.*')
+                    ->with('ringtone')
+                    ->paginate(70)->sortByDesc('view_count');
+//                $data = Category::findOrFail($id)
+//                    ->ringtones()
+//                    ->orderBy('view_count', 'desc')
+//                    ->paginate(70);
                 break;
             case 3:
-                $data = Category::findOrFail($id)
-                    ->ringtones()
-                    ->where('feature', 1)
-                    ->paginate(70);
+                $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                    ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                    ->where('web_site',$domain)
+                    ->where('categories.id',$id)
+                    ->select('categories.*')
+                    ->with('ringtone')
+                    ->paginate(70)->sortByDesc('feature');
+//                $data = Category::findOrFail($id)
+//                    ->ringtones()
+//                    ->where('feature', 1)
+//                    ->paginate(70);
                 break;
             case 4:
-                $data = Category::findOrFail($id)
-                    ->ringtones()
-                    ->orderBy('name', 'asc')
-                    ->paginate(70);
+                $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                    ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                    ->where('web_site',$domain)
+                    ->where('categories.id',$id)
+                    ->select('categories.*')
+                    ->with('ringtone')
+                    ->paginate(70)->sortByAsc('name');
+//                $data = Category::findOrFail($id)
+//                    ->ringtones()
+//                    ->orderBy('name', 'asc')
+//                    ->paginate(70);
                 break;
             default :
-                $data = Category::findOrFail($id)
-                    ->ringtones()
+                $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                    ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                    ->where('web_site',$domain)
+                    ->where('categories.id',$id)
+                    ->select('categories.*')
+                    ->with('ringtone')
                     ->paginate(70);
+//                $data = Category::findOrFail($id)
+//                    ->ringtones()
+//                    ->paginate(70);
         }
-
         $ringtones = $this->checkLikedToRingtones($deviceId, $data);
         $getResource = RingtoneResource::collection($ringtones);
+        dd($getResource);
+
         return $getResource;
 //        }catch (\Exception $e){
 //            return response()->json(['warning' => ['This Category is not exist']], 200);
