@@ -15,7 +15,6 @@ class CategoryController extends Controller
 {
     public function index()
     {
-
         $domain=$_SERVER['SERVER_NAME'];
 
         if(checkBlockIp()){
