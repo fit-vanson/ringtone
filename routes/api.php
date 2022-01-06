@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\RingtoneController;
-
+use App\Http\Controllers\Api\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +48,6 @@ Route::group([ ], function() {
     Route::post('ringtone-favorite-unsaved/', [FavoriteController::class, 'disLikeRingtone']);
     Route::get('favorite/{device_id}', [FavoriteController::class, 'getSaved']);
 
-    Route::post('search', [FavoriteController::class, 'search']);
+    Route::post('search', [SearchController::class, 'search']);
 });
 
