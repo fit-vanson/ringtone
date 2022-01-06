@@ -63,7 +63,7 @@ class CategoryController extends Controller
 //        dd($records);
         $data_arr = array();
         foreach ($records as $key => $record) {
-            $image_count = '<a href="/admin/wallpaper?category='.$record->name.'"> <span>'.$record->ringtone->count().'</span></a>';
+            $image_count = '<a href="/admin/ringtones?category='.$record->name.'"> <span>'.$record->ringtone->count().'</span></a>';
             $data_arr[] = array(
                 "id" => $record->id,
                 "name" => $record->name,
