@@ -32,7 +32,7 @@ return [
      * List of disk names that you want to use
      * (from config/filesystems)
      */
-    'diskList' => ['public','logs'],
+    'diskList' => ['public','base'],
 
     /**
      * Default disk for left manager

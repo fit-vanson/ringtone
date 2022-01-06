@@ -28,16 +28,13 @@ class UsersACLRepository implements ACLRepository
         if (Auth::user()->getRoleNames()->first() === 'admin') {
             return [
                 ['disk' => 'public', 'path' => '*', 'access' => 2],
-                ['disk' => 'logs', 'path' => '*', 'access' => 2],
+                ['disk' => 'base', 'path' => '*', 'access' => 2],
             ];
         }
 
         return [
             ['disk' => 'public', 'path' => '*', 'access' => 1],                                  // main folder - read
-            ['disk' => 'logs', 'path' => '*', 'access' => 0],                                  // main folder - read
-//            ['disk' => 'disk-name', 'path' => 'users', 'access' => 1],                              // only read
-//            ['disk' => 'disk-name', 'path' => 'users/'. Auth::user()->name, 'access' => 1],        // only read
-//            ['disk' => 'disk-name', 'path' => 'users/'. Auth::user()->name .'/*', 'access' => 2],  // read and write
+            ['disk' => 'base', 'path' => '*', 'access' => 0],                                  // main folder - read
         ];
     }
 }
