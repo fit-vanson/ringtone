@@ -29,7 +29,7 @@
 <body>
 <style>
     .hero-section .figure-holder {
-        background: url({{asset('storage/homes/'. preg_replace('/[^A-Za-z0-9\-._]/',"/",$site->header_image))}}) no-repeat right top;
+        background: url({{asset('storage/sites/'. preg_replace('/[^A-Za-z0-9\-._]/',"/",$site->header_image))}}) no-repeat right top;
         background-size: 375px auto;
         min-height: 600px;
         display: block;

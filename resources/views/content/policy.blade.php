@@ -14,7 +14,7 @@
         .header {
             padding: 60px;
             text-align: center;
-            background-image: url({{asset('storage/homes/'. preg_replace('/[^A-Za-z0-9\-.]/',"/",$site->header_image))}});
+            background-image: url({{asset('storage/sites/'. preg_replace('/[^A-Za-z0-9\-.]/',"/",$site->header_image))}});
             color: white;
             font-size: 30px;
             margin-bottom: 30px;
