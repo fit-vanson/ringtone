@@ -5,11 +5,20 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '1fcb6c217ac0de11132691bdff57e99d85841edd',
+        'reference' => 'adbd0a477a71a937b882547b1e21a0db5c260fb8',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
     'versions' => array(
+        'alexusmai/laravel-file-manager' => array(
+            'pretty_version' => 'v2.5.4',
+            'version' => '2.5.4.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../alexusmai/laravel-file-manager',
+            'aliases' => array(),
+            'reference' => '1ad25434eb321cc208dbd3cecca504bd4f774b57',
+            'dev_requirement' => false,
+        ),
         'asm89/stack-cors' => array(
             'pretty_version' => 'v2.0.3',
             'version' => '2.0.3.0',
@@ -415,6 +424,15 @@
             'reference' => '744ebba495319501b873a4e48787759c72e3fb8c',
             'dev_requirement' => false,
         ),
+        'intervention/imagecache' => array(
+            'pretty_version' => '2.5.1',
+            'version' => '2.5.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../intervention/imagecache',
+            'aliases' => array(),
+            'reference' => 'e714f13298ecaf9b2d11cb7106a0415d5615cbe5',
+            'dev_requirement' => false,
+        ),
         'jellybellydev/image-orientation-fix' => array(
             'pretty_version' => 'v3.1.0',
             'version' => '3.1.0.0',
@@ -454,7 +472,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '1fcb6c217ac0de11132691bdff57e99d85841edd',
+            'reference' => 'adbd0a477a71a937b882547b1e21a0db5c260fb8',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(

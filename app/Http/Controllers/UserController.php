@@ -35,7 +35,7 @@ class UserController extends Controller
             return view('content.user.index', ['pageConfigs' => $pageConfigs,'users'=>$users,'roles'=>$roles]);
         }else{
             $user = Auth::user();
-            $role = Auth::user()->getRoleNames()[0];
+            $role = Auth::user()->getRoleNames()->first();
             return view('content.user.info', ['pageConfigs' => $pageConfigs,'user'=>$user,'role'=>$role]);
         }
     }
@@ -81,13 +81,14 @@ class UserController extends Controller
             $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Edit" class="btn btn-warning editUser">Edit</i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteUser">Del</i></a>';
 
+//            dd($record->getRoleNames());
 
             $data_arr[] = array(
                 "id" => $record->id,
                 "name" => $record->name,
                 "email" => $record->email,
                 "avatar" => $record->avatar,
-                "roles" => (count($record->getRoleNames())> 0) ? $record->getRoleNames()[0] : 'Guest' ,
+                "roles" =>  $record->getRoleNames()->first(),
             );
         }
 

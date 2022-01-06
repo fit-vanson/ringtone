@@ -63,10 +63,6 @@ class RingtonesController extends Controller
             ->where('ringtones.name', 'like', '%' . $searchValue . '%')
             ->orWhere('categories.name', 'like', '%' . $searchValue . '%')
             ->count();
-
-
-
-        // Get records, also we have included search filter as well
         $records = Ringtone::with('categories')->orderBy($columnName, $columnSortOrder)
             ->leftJoin('category_has_ringtones', 'category_has_ringtones.ringtone_id', '=', 'ringtones.id')
             ->leftJoin('categories', 'categories.id', '=', 'category_has_ringtones.category_id')
@@ -190,7 +186,6 @@ class RingtonesController extends Controller
         $ringtone = Ringtone::find($id);
         $pathRemove    =   storage_path('app/public/ringtones/').$ringtone->ringtone_file;
         try {
-
             if(file_exists($pathRemove)){
                 unlink($pathRemove);
             }
@@ -202,31 +197,22 @@ class RingtonesController extends Controller
 
         return response()->json(['success'=>'Xóa thành công.']);
     }
-
     public function deleteSelect(Request $request)
     {
         $id = $request->id;
-        $wallpapers = Wallpapers::whereIn('id',$id)->get();
-        foreach ( $wallpapers as $wallpaper){
-            $path_thumbnail =   storage_path('app/public/wallpapers/thumbnail/').$wallpaper->thumbnail_image;
-            $path_detail    =   storage_path('app/public/wallpapers/detail/').$wallpaper->image;
-            $path_origin    =   storage_path('app/public/wallpapers/download/').$wallpaper->origin_image;
+        $ringtones = Ringtone::whereIn('id',$id)->get();
+        foreach ( $ringtones as $ringtone){
+            $path_Remove =   storage_path('app/public/ringtones/').$ringtone->ringtone_file;
 //            dd($path_thumbnail);
             try {
-                if(file_exists($path_thumbnail)){
-                    unlink($path_thumbnail);
-                }
-                if(file_exists($path_detail)){
-                    unlink($path_detail);
-                }
-                if(file_exists($path_origin)){
-                    unlink($path_origin);
+                if(file_exists($path_Remove)){
+                    unlink($path_Remove);
                 }
             }catch (Exception $ex) {
                 Log::error($ex->getMessage());
             }
-            $wallpaper->category()->detach();
-            $wallpaper->delete();
+            $ringtone->categories()->detach();
+            $ringtone->delete();
         }
         return response()->json(['success'=>'Xóa thành công.']);
     }

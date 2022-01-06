@@ -139,6 +139,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/php-http/discovery" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/php-http/httplug" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ejarnutowski/laravel-api-key" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/alexusmai/laravel-file-manager" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/imagecache" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

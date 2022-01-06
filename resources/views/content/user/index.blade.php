@@ -244,16 +244,13 @@
                       targets: 3,
                       orderable: false,
                       render: function (data, type, full, meta) {
-
                           var $assignedTo = full.roles,
                               $output = '';
                           var roleBadgeObj = {
-                              Admin:
+                              admin:
                                   '<span class="badge rounded-pill badge-light-primary">Admin</span>',
-                              User:
+                              user:
                                   '<span class="badge rounded-pill badge-light-success">User</span>',
-                              Guest:
-                                  '<span class="badge rounded-pill badge-light-secondary">Guest</span>',
                           };
                           $output = roleBadgeObj[full.roles];
                           return $output
