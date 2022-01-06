@@ -47,6 +47,7 @@
                   <th>Set As Premium</th>
                   <th>View Count</th>
                   <th>Like Count</th>
+                  <th>Downloads</th>
                   <th>Ringtone File</th>
                   <th>Category</th>
                   <th>Actions</th>
@@ -166,8 +167,9 @@
                   { data: 'set_as_premium' },
                   { data: 'view_count'},
                   { data: 'like_count'},
+                  { data: 'downloads'},
                   { data: 'ringtone_file'},
-                  { data: 'category'},
+                  { data: 'categories.name'},
                   { data: 'Actions' }
               ],
               columnDefs: [
@@ -214,7 +216,7 @@
                       }
                   },
                   {
-                      targets: 6,
+                      targets: 7,
                       orderable: false,
                       render: function (data, type, full, meta) {
                               var $output = '<audio class="audio-player" controls><source src="{{asset('storage/ringtones')}}/'+data+'" type="audio/mp3"/></audio>';
@@ -222,18 +224,19 @@
                       }
                   },
                   {
-                      targets: 7,
-                      orderable: false,
+                      targets: 8,
+                      // orderable: false,
                       render: function (data, type, full, meta) {
-                          var categories = full['category'],
+                          console.log(full)
+                          var categories = full['categories.name'],
                               $output = '';
-                          $.each(categories, function(i, item) {
+                          // $.each(categories, function(i, item) {
                               var stateNum = Math.floor(Math.random() * 6) + 1;
                               var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
                               var $state = states[stateNum];
-                              $output += '<span style="margin-top: 5px;" class="badge rounded-pill badge-light-'+$state+'">'+item+'</span></br>';
-                              return i<2;
-                          });
+                              $output += '<span style="margin-top: 5px;" class="badge rounded-pill badge-light-'+$state+'">'+categories+'</span></br>';
+                          //     return i<2;
+                          // });
                           return $output
                       }
                   },

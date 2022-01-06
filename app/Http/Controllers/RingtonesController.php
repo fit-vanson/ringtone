@@ -90,7 +90,8 @@ class RingtonesController extends Controller
                 "thumbnail_image" => $record->thumbnail_image,
                 "view_count" => $record->view_count,
                 "like_count" => $record->like_count,
-                "category" => $cate_name,
+                "downloads" => $record->downloads,
+                "categories.name" => $cate_name[0],
             );
         }
         $response = array(
