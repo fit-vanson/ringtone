@@ -89,8 +89,8 @@ class SearchController extends Controller
                     ->get();
             }
         }
-        Log::error($ringtones);
-        Log::error($cate);
+        Log::error('Ring : '.$ringtones);
+        Log::error('Cate: '.$cate);
         Log::error($request->all());
         return [
             'cates_result' =>  CategoryResource::collection($cate),
