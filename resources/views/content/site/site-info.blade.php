@@ -83,7 +83,7 @@
                         @elseif($site->load_wallpapers == 3 )
                             <span class="badge bg-light-primary">Feature Wallpaper</span>
                         @elseif($site->load_wallpapers == 4 )
-                            <span class="badge bg-light-primary">Sort ABC</span>
+                            <span class="badge bg-light-warning">Sort ABC</span>
                         @endif
                     </li>
                 </ul>
