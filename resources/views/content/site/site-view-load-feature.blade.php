@@ -255,7 +255,8 @@
                   {{--url: '{{asset('admin/site/view')}}/'+site_id +'/update?load_feature='+target.value,--}}
                   // url: '../'+ id + "/change-ads",
                   success: function (data) {
-                      $(".site_load_feature").load(" .site_load_feature");
+                      $(".site_load_wallpapers").load(" .site_load_wallpapers");
+                      $(".site_load_home_features").load(" .site_load_home_features");
                       toastr['success']('', data.success, {
                           showMethod: 'fadeIn',
                           hideMethod: 'fadeOut',

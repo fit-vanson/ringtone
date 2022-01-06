@@ -59,16 +59,31 @@
                         @endif
                     </li>
 
-                    <li class="mb-75 site_load_feature">
-                        <span class="fw-bolder me-25">Load Feature:</span>
-                        @if($site->load_view_by == 0 )
+                    <li class="mb-75 site_load_home_features">
+                        <span class="fw-bolder me-25">Load Home Features:</span>
+                        @if($site->load_home_features == 0 )
                             <span class="badge bg-light-secondary">Random</span>
-                        @elseif($site->load_view_by == 1 )
+                        @elseif($site->load_home_features == 1 )
                             <span class="badge bg-light-success">Manual</span>
-                        @elseif($site->load_view_by == 2 )
+                        @elseif($site->load_home_features == 2 )
                             <span class="badge bg-light-info">Most View</span>
-                        @elseif($site->load_view_by == 3 )
+                        @elseif($site->load_home_features == 3 )
                             <span class="badge bg-light-primary">Feature Wallpaper</span>
+                        @endif
+                    </li>
+
+                    <li class="mb-75 site_load_wallpapers">
+                        <span class="fw-bolder me-25">Load Home Features:</span>
+                        @if($site->load_wallpapers == 0 )
+                            <span class="badge bg-light-secondary">Random</span>
+                        @elseif($site->load_wallpapers == 1 )
+                            <span class="badge bg-light-success">Most Like</span>
+                        @elseif($site->load_wallpapers == 2 )
+                            <span class="badge bg-light-info">Most View</span>
+                        @elseif($site->load_wallpapers == 3 )
+                            <span class="badge bg-light-primary">Feature Wallpaper</span>
+                        @elseif($site->load_wallpapers == 4 )
+                            <span class="badge bg-light-primary">Sort ABC</span>
                         @endif
                     </li>
                 </ul>
