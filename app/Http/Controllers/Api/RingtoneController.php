@@ -329,8 +329,9 @@ class RingtoneController extends Controller
 //                    ->paginate(70);
         }
         $ringtones = $this->checkLikedToRingtones($deviceId, $data);
+            Log::error($data);
         $getResource = RingtoneResource::collection($ringtones);
-            Log::error($getResource);
+
         return $getResource;
         }catch (\Exception $e){
             return response()->json(['warning' => ['This Category is not exist']], 200);
