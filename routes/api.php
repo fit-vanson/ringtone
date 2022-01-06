@@ -31,7 +31,9 @@ Route::get('/test-api',function (){
    return ['a'=>'ssss'];
 });
 
-Route::group([ ], function() {
+Route::group([
+    'middleware' => 'auth.apikey'
+    ], function() {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/popular', [CategoryController::class, 'getPopulared']);
 
