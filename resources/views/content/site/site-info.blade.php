@@ -13,7 +13,7 @@
                     />
                     <div class="user-info text-center">
                         <a href="//{{$site->web_site}}" target="_blank" >
-                            <h3>{{$site->site_name}}</h3>
+                            <h3>{{$site->web_site}}</h3>
                         </a>
                     </div>
                 </div>

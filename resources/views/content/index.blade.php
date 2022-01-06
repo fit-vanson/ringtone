@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{{$site->name_site}} Mobile Apps</title>
+    <title>{{$site->site_name}} Mobile Apps</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
