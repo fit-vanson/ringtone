@@ -178,7 +178,6 @@
                       orderable: false,
                       responsivePriority: 3,
                       render: function (data, type, full, meta) {
-                          console.log(full)
                           return (
                               '<div class="form-check"> <input class="form-check-input dt-checkboxes" type="checkbox" value="'+[full.id]+'" name="id[]" id="checkbox' +
                               data +
