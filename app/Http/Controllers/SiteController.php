@@ -584,7 +584,7 @@ class SiteController extends Controller
         $site = SiteManage::find($id);
         if($request->header_image){
             if($site->header_image){
-                $path_Remove =   storage_path('app/public/homes/').$site->header_image;
+                $path_Remove =   storage_path('app/public/sites/').$site->header_image;
                 if(file_exists($path_Remove)){
                     unlink($path_Remove);
                 }
@@ -599,7 +599,7 @@ class SiteController extends Controller
             $monthName = $dateObj->format('F'); // Month
             $year = $now->format('Y'); // Year
             $monthYear = $monthName.$year;
-            $path_image    =  storage_path('app/public/homes/'.$monthYear.'/');
+            $path_image    =  storage_path('app/public/sites/'.$monthYear.'/');
             if (!file_exists($path_image)) {
                 mkdir($path_image, 0777, true);
             }
