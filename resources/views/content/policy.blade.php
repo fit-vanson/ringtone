@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="header">
-    <h1>{{$site->name_site}} Privacy Policy</h1>
+    <h1>{{$site->site_name}} Privacy Policy</h1>
 </div>
 <div class="container">
     <div class="container-fluid">
