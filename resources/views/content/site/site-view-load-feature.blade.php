@@ -78,15 +78,18 @@
             </div>
 {{--            @dd($site->load_view_by)--}}
             <div class="card-body">
-                <div class="demo-inline-spacing">
+                <p class="card-text mb-0 ">
+                    Load Home Features
+                </p>
+                <div class="demo-inline-spacing justify-content-center">
                     <div class="form-check form-check-inline">
                         <input
                             class="form-check-input"
                             type="radio"
-                            name="load_feature"
+                            name="load_home_features"
                             value="0"
                             <?=
-                                $site->load_view_by == 0 ?'checked' : '';
+                                $site->load_home_features == 0 ?'checked' : '';
                             ?>
 
                         />
@@ -96,10 +99,10 @@
                         <input
                             class="form-check-input"
                             type="radio"
-                            name="load_feature"
+                            name="load_home_features"
                             value="1"
                         <?=
-                            $site->load_view_by == 1 ?'checked' : '';
+                            $site->load_home_features == 1 ?'checked' : '';
                             ?>
                         />
                         <label class="form-check-label" for="manual">Manual</label>
@@ -108,10 +111,10 @@
                         <input
                             class="form-check-input"
                             type="radio"
-                            name ="load_feature"
+                            name ="load_home_features"
                             value="2"
                         <?=
-                            $site->load_view_by == 2 ?'checked' : '';
+                            $site->load_home_features == 2 ?'checked' : '';
                             ?>
                         />
                         <label class="form-check-label" for="most_view">Most View</label>
@@ -120,13 +123,80 @@
                         <input
                             class="form-check-input"
                             type="radio"
-                            name ="load_feature"
+                            name ="load_home_features"
                             value="3"
                         <?=
-                            $site->load_view_by == 3 ?'checked' : '';
+                            $site->load_home_features == 3 ?'checked' : '';
                             ?>
                         />
                         <label class="form-check-label" for="feature_wallpaper">Feature Wallpaper</label>
+                    </div>
+                </div>
+                <br>
+                <p class="card-text mb-0">
+                    Load Wallpapers
+                </p>
+                <div class="demo-inline-spacing justify-content-center">
+                    <div class="form-check form-check-inline">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="load_wallpapers"
+                            value="0"
+                        <?=
+                            $site->load_wallpapers == 0 ?'checked' : '';
+                            ?>
+
+                        />
+                        <label class="form-check-label" for="random">Random</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="load_wallpapers"
+                            value="1"
+                        <?=
+                            $site->load_wallpapers == 1 ?'checked' : '';
+                            ?>
+                        />
+                        <label class="form-check-label" for="manual">Most Like</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name ="load_wallpapers"
+                            value="2"
+                        <?=
+                            $site->load_wallpapers == 2 ?'checked' : '';
+                            ?>
+                        />
+                        <label class="form-check-label" for="most_view">Most View</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name ="load_wallpapers"
+                            value="3"
+                        <?=
+                            $site->load_wallpapers == 3 ?'checked' : '';
+                            ?>
+                        />
+                        <label class="form-check-label" for="feature_wallpaper">Feature Wallpaper</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name ="load_wallpapers"
+                            value="4"
+                        <?=
+                            $site->load_wallpapers == 4 ?'checked' : '';
+                            ?>
+                        />
+                        <label class="form-check-label" for="feature_wallpaper">Sort ABC</label>
                     </div>
                 </div>
             </div>
@@ -174,11 +244,14 @@
               }
           });
           var url = window.location.pathname;
-          document.body.addEventListener('change', function (e) {
-              let target = e.target;
+
+          $('input[type=radio]').on('change', function() {
+              var val = $(this).val();
+              var name = $(this).attr('name');
+              console.log(val, name)
               $.ajax({
                   type: "get",
-                  url: url +'/update?load_feature='+target.value,
+                  url: url +'/update?'+name+'='+val,
                   {{--url: '{{asset('admin/site/view')}}/'+site_id +'/update?load_feature='+target.value,--}}
                   // url: '../'+ id + "/change-ads",
                   success: function (data) {
@@ -193,6 +266,29 @@
                   }
               });
           });
+
+
+          {{--document.body.addEventListener('change', function (e) {--}}
+          {{--    let target = e.target;--}}
+          {{--    let var2 = this.name;--}}
+
+          {{--    $.ajax({--}}
+          {{--        type: "get",--}}
+          {{--        url: url +'/update?load_feature='+target.value,--}}
+          {{--        --}}{{--url: '{{asset('admin/site/view')}}/'+site_id +'/update?load_feature='+target.value,--}}
+          {{--        // url: '../'+ id + "/change-ads",--}}
+          {{--        success: function (data) {--}}
+          {{--            $(".site_load_feature").load(" .site_load_feature");--}}
+          {{--            toastr['success']('', data.success, {--}}
+          {{--                showMethod: 'fadeIn',--}}
+          {{--                hideMethod: 'fadeOut',--}}
+          {{--                timeOut: 2000,--}}
+          {{--            });--}}
+          {{--        },--}}
+          {{--        error: function (data) {--}}
+          {{--        }--}}
+          {{--    });--}}
+          {{--});--}}
 
       });
   </script>

@@ -671,8 +671,14 @@ class SiteController extends Controller
     }
 
     public function site_updateLoadFeature(Request $request,$id){
-        $site = SiteManage::where('web_site',$id)->update(['load_view_by'=>$request->load_feature]);
-        return response()->json(['success'=>'Cập nhật thành công']);
+        if(isset($request->load_home_features) ){
+            SiteManage::where('web_site',$id)->update(['load_home_features'=>$request->load_home_features]);
+            return response()->json(['success'=>'Cập nhật thành công']);
+        }
+        if(isset($request->load_wallpapers)){
+            SiteManage::where('web_site',$id)->update(['load_wallpapers'=>$request->load_wallpapers]);
+            return response()->json(['success'=>'Cập nhật thành công']);
+        }
     }
 
 }
