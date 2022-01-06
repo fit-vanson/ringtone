@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\RingtoneResource;
-use App\Models\Category;
 use App\Models\CategoryManage;
 use App\Models\Ringtone;
 use Illuminate\Http\Request;
@@ -38,7 +37,8 @@ class SearchController extends Controller
                     ->take(20)
                     ->get();
             }
-            $cate = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+            $cate = CategoryManage::select('categories.*')
+                ->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                 ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
                 ->where('web_site',$domain)
                 ->where('categories.turn_to_fake_cate',$isFake)
@@ -46,7 +46,8 @@ class SearchController extends Controller
                 ->take(20)
                 ->get();
             if($cate->isEmpty()){
-                $cate = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                $cate = CategoryManage::select('categories.*')
+                    ->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                     ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
                     ->where('web_site',$domain)
                     ->where('categories.turn_to_fake_cate',$isFake)
