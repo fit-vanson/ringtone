@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 05, 2022 lúc 08:55 AM
+-- Thời gian đã tạo: Th1 06, 2022 lúc 08:28 AM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 8.0.12
 
@@ -24,6 +24,22 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `acl_rules`
+--
+
+CREATE TABLE `acl_rules` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED DEFAULT NULL,
+  `disk` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `path` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `access` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `api_keys`
 --
 
@@ -36,13 +52,6 @@ CREATE TABLE `api_keys` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `api_keys`
---
-
-INSERT INTO `api_keys` (`id`, `name`, `key`, `active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'app1', 'tqstpILqIZ7m3Jg4dTipN5cQH0kLg8OELGNHEoAEF3pbdTX8ZPjosWsLJHqxVYp1', 1, '2022-01-05 04:06:45', '2022-01-05 04:09:08', '2022-01-05 04:09:08');
 
 -- --------------------------------------------------------
 
@@ -74,13 +83,6 @@ CREATE TABLE `api_key_admin_events` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `api_key_admin_events`
---
-
-INSERT INTO `api_key_admin_events` (`id`, `api_key_id`, `ip_address`, `event`, `created_at`, `updated_at`) VALUES
-(1, 1, '127.0.0.1', 'created', '2022-01-05 04:06:45', '2022-01-05 04:06:45');
-
 -- --------------------------------------------------------
 
 --
@@ -108,14 +110,6 @@ CREATE TABLE `block_i_p_s` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `block_i_p_s`
---
-
-INSERT INTO `block_i_p_s` (`id`, `ip_address`, `created_at`, `updated_at`) VALUES
-(3, '3/2', '2022-01-05 04:54:31', '2022-01-05 04:54:31'),
-(4, 'Tp.Vinh', '2022-01-05 04:58:40', '2022-01-05 04:58:40');
-
 -- --------------------------------------------------------
 
 --
@@ -134,17 +128,6 @@ CREATE TABLE `categories` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `categories`
---
-
-INSERT INTO `categories` (`id`, `name`, `image`, `slug`, `view_count`, `turn_to_fake_cate`, `order`, `created_at`, `updated_at`) VALUES
-(1, 'defaultCategory', 'January2022/defaultcategory_1641354661.jpg', 'defaultcategory', 1556, 0, 1, '2022-01-05 03:51:01', '2022-01-05 03:51:01'),
-(2, 'category12', 'January2022/category12_1641355489.JPG', 'category12', 11862, 0, 1, '2022-01-05 03:51:09', '2022-01-05 04:04:50'),
-(3, 'Bugatti', 'January2022/bugatti_1641357410.jpg', 'bugatti', 1673, 0, 1, '2022-01-05 04:36:50', '2022-01-05 04:36:50'),
-(4, 'hj', 'January2022/hj_1641357435.jpg', 'hj', 1708, 0, 1, '2022-01-05 04:37:15', '2022-01-05 04:37:15'),
-(5, 'Phace_defaultCategory', 'January2022/phace-defaultcategory_1641357460.jpg', 'phace-defaultcategory', 1817, 0, 1, '2022-01-05 04:37:41', '2022-01-05 04:37:41');
-
 -- --------------------------------------------------------
 
 --
@@ -155,18 +138,10 @@ CREATE TABLE `categories_has_site` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `category_id` int(11) NOT NULL,
   `site_id` int(11) NOT NULL,
-  `image` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` longtext COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `categories_has_site`
---
-
-INSERT INTO `categories_has_site` (`id`, `category_id`, `site_id`, `image`, `created_at`, `updated_at`) VALUES
-(2, 2, 1, NULL, NULL, NULL),
-(3, 3, 1, 'January2022/1_3_1641358169.jpg', NULL, '2022-01-05 04:49:29');
 
 -- --------------------------------------------------------
 
@@ -181,14 +156,6 @@ CREATE TABLE `category_has_ringtones` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `category_has_ringtones`
---
-
-INSERT INTO `category_has_ringtones` (`id`, `category_id`, `ringtone_id`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, NULL, NULL),
-(2, 2, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -220,14 +187,6 @@ CREATE TABLE `feature_images` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `feature_images`
---
-
-INSERT INTO `feature_images` (`id`, `image`, `site_id`, `created_at`, `updated_at`) VALUES
-(3, 'January2022/1_audi-12-1640165319.jpg', 1, '2022-01-05 05:09:20', '2022-01-05 05:09:20'),
-(4, 'January2022/1_audi-11-1640165319.jpg', 1, '2022-01-05 05:09:21', '2022-01-05 05:09:21');
-
 -- --------------------------------------------------------
 
 --
@@ -240,28 +199,6 @@ CREATE TABLE `list_ips` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `load_features`
---
-
-CREATE TABLE `load_features` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `load_view_by` tinyint(1) NOT NULL DEFAULT 1,
-  `key` varchar(191) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'load_home_features',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `load_features`
---
-
-INSERT INTO `load_features` (`id`, `load_view_by`, `key`, `created_at`, `updated_at`) VALUES
-(1, 1, 'load_home_features', NULL, NULL),
-(2, 1, 'load_wallpapers', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -280,25 +217,26 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(34, '2014_10_12_000000_create_users_table', 1),
-(35, '2014_10_12_100000_create_password_resets_table', 1),
-(36, '2016_12_28_111110_create_api_keys_table', 1),
-(37, '2016_12_28_111111_create_api_key_access_events_table', 1),
-(38, '2016_12_28_111112_create_api_key_admin_events_table', 1),
-(39, '2019_08_19_000000_create_failed_jobs_table', 1),
-(40, '2021_11_08_081758_create_permission_tables', 1),
-(41, '2021_12_22_105810_create_site_manages_table', 1),
-(42, '2021_12_22_113444_create_category_manages_table', 1),
-(43, '2021_12_23_093103_create_tbl_category_has_site', 1),
-(44, '2021_12_27_112650_create_block_i_p_s_table', 1),
-(45, '2021_12_27_120510_create_tbl_site_has_block_ip', 1),
-(46, '2021_12_29_161527_create_visitors_table', 1),
-(47, '2021_12_29_162215_create_list_ips_table', 1),
-(48, '2021_12_30_170611_create_feature_images_table', 1),
-(49, '2022_01_05_102349_create_ringtones_table', 1),
-(50, '2022_01_05_102410_create_category_has_ringtones_table', 1),
-(51, '2022_01_05_102632_create_visitor_favorites_table', 1),
-(52, '2022_01_05_142319_create_load_features_table', 2);
+(52, '2022_01_05_142319_create_load_features_table', 2),
+(59, '2014_10_12_000000_create_users_table', 3),
+(60, '2014_10_12_100000_create_password_resets_table', 3),
+(61, '2016_12_28_111110_create_api_keys_table', 3),
+(62, '2016_12_28_111111_create_api_key_access_events_table', 3),
+(63, '2016_12_28_111112_create_api_key_admin_events_table', 3),
+(64, '2019_08_19_000000_create_failed_jobs_table', 3),
+(65, '2021_11_08_081758_create_permission_tables', 3),
+(66, '2021_12_22_105810_create_site_manages_table', 3),
+(67, '2021_12_22_113444_create_category_manages_table', 3),
+(68, '2021_12_23_093103_create_tbl_category_has_site', 3),
+(69, '2021_12_27_112650_create_block_i_p_s_table', 3),
+(70, '2021_12_27_120510_create_tbl_site_has_block_ip', 3),
+(71, '2021_12_29_161527_create_visitors_table', 3),
+(72, '2021_12_29_162215_create_list_ips_table', 3),
+(73, '2021_12_30_170611_create_feature_images_table', 3),
+(74, '2022_01_05_102349_create_ringtones_table', 3),
+(75, '2022_01_05_102410_create_category_has_ringtones_table', 3),
+(76, '2022_01_05_102632_create_visitor_favorites_table', 3),
+(77, '2022_01_05_142908_add_column_table', 3);
 
 -- --------------------------------------------------------
 
@@ -323,13 +261,6 @@ CREATE TABLE `model_has_roles` (
   `model_type` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `model_has_roles`
---
-
-INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
-(1, 'App\\Models\\User', 1);
 
 -- --------------------------------------------------------
 
@@ -367,7 +298,7 @@ CREATE TABLE `ringtones` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `thumbnail_image` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `feature` tinyint(1) NOT NULL DEFAULT 0,
+  `feature` tinyint(1) NOT NULL,
   `set_as_premium` tinyint(1) NOT NULL DEFAULT 0,
   `downloads` int(11) NOT NULL DEFAULT 0,
   `like_count` int(11) NOT NULL DEFAULT 0,
@@ -376,14 +307,6 @@ CREATE TABLE `ringtones` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `ringtones`
---
-
-INSERT INTO `ringtones` (`id`, `name`, `thumbnail_image`, `feature`, `set_as_premium`, `downloads`, `like_count`, `view_count`, `ringtone_file`, `created_at`, `updated_at`) VALUES
-(1, 'Sau-Nay-Neu-Co-Yeu-Ai-Tang-Phuc-Ngo-Kien-Huy', NULL, 0, 1, 0, 783, 600, 'January2022/Sau-Nay-Neu-Co-Yeu-Ai-Tang-Phuc-Ngo-Kien-Huy_1641361796.mp3', '2022-01-05 05:49:56', '2022-01-05 06:49:39'),
-(2, 'Thay-Long-DIMZ-TVk-NH4T', NULL, 1, 0, 0, 976, 768, 'January2022/Thay-Long-DIMZ-TVk-NH4T_1641361797.mp3', '2022-01-05 05:49:57', '2022-01-05 06:48:43');
 
 -- --------------------------------------------------------
 
@@ -398,14 +321,6 @@ CREATE TABLE `roles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `roles`
---
-
-INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'web', '2022-01-05 03:36:18', '2022-01-05 03:36:18'),
-(2, 'user', 'web', '2022-01-05 03:36:18', '2022-01-05 03:36:18');
 
 -- --------------------------------------------------------
 
@@ -432,6 +347,7 @@ CREATE TABLE `sites` (
   `ad_switch` tinyint(1) NOT NULL DEFAULT 0,
   `load_wallpapers` tinyint(4) NOT NULL DEFAULT 1,
   `load_home_features` tinyint(4) NOT NULL DEFAULT 1,
+  `load_view_by` tinyint(1) NOT NULL DEFAULT 1,
   `header_title` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
   `header_content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `body_title` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -442,13 +358,6 @@ CREATE TABLE `sites` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `sites`
---
-
-INSERT INTO `sites` (`id`, `header_image`, `site_name`, `web_site`, `ad_switch`, `load_wallpapers`, `load_home_features`, `header_title`, `header_content`, `body_title`, `body_content`, `footer_title`, `footer_content`, `policy`, `created_at`, `updated_at`) VALUES
-(1, 'January2022/kpop-ringtone_1641359034.png', 'Kpop Ringtone', 'kpop.ringtone4u.xyz', 1, 1, 1, 'Header Title', 'Header Title', 'Header Title', 'Header Title', 'Header Title', 'Header Title', '<p>f</p>', '2022-01-05 04:24:59', '2022-01-05 05:10:49');
 
 -- --------------------------------------------------------
 
@@ -466,13 +375,6 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@admin.com', NULL, '$2y$10$cfSMdI2fj1tusrZpzYy2SuE0Zr7HfX5XaZRYHW1SayePjbV2qfXwC', NULL, '2022-01-05 03:36:19', '2022-01-05 03:36:19');
 
 -- --------------------------------------------------------
 
@@ -504,6 +406,12 @@ CREATE TABLE `visitor_favorites` (
 --
 -- Chỉ mục cho các bảng đã đổ
 --
+
+--
+-- Chỉ mục cho bảng `acl_rules`
+--
+ALTER TABLE `acl_rules`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `api_keys`
@@ -580,12 +488,6 @@ ALTER TABLE `feature_images`
 -- Chỉ mục cho bảng `list_ips`
 --
 ALTER TABLE `list_ips`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `load_features`
---
-ALTER TABLE `load_features`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -673,10 +575,16 @@ ALTER TABLE `visitor_favorites`
 --
 
 --
+-- AUTO_INCREMENT cho bảng `acl_rules`
+--
+ALTER TABLE `acl_rules`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT cho bảng `api_keys`
 --
 ALTER TABLE `api_keys`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `api_key_access_events`
@@ -688,37 +596,37 @@ ALTER TABLE `api_key_access_events`
 -- AUTO_INCREMENT cho bảng `api_key_admin_events`
 --
 ALTER TABLE `api_key_admin_events`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `block_ips_has_site`
 --
 ALTER TABLE `block_ips_has_site`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `block_i_p_s`
 --
 ALTER TABLE `block_i_p_s`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `categories_has_site`
 --
 ALTER TABLE `categories_has_site`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `category_has_ringtones`
 --
 ALTER TABLE `category_has_ringtones`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `failed_jobs`
@@ -730,7 +638,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT cho bảng `feature_images`
 --
 ALTER TABLE `feature_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `list_ips`
@@ -739,16 +647,10 @@ ALTER TABLE `list_ips`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `load_features`
---
-ALTER TABLE `load_features`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT cho bảng `permissions`
@@ -760,25 +662,25 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT cho bảng `ringtones`
 --
 ALTER TABLE `ringtones`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `sites`
 --
 ALTER TABLE `sites`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `visitors`

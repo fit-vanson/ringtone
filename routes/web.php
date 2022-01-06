@@ -66,6 +66,11 @@ Route::get('/updateapp', function()
     Artisan::call('dump-autoload');
     echo 'dump-autoload complete';
 });
+Route::get('/seed-db', function()
+{
+    Artisan::call('db:seed --class=UserSeeder ');
+    echo 'complete';
+});
 
 
 Route::get('/', [HomeController::class, 'show'])->name('show');
