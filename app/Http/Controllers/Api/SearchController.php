@@ -19,7 +19,7 @@ class SearchController extends Controller
         $isFake = 0;
         if (checkBlockIp()){
             $isFake = 1;
-            $ringtones=Ringtone::where('name', 'LIKE','%' . $query . '%')
+            $ringtones= Ringtone::where('name', 'like', '%' . $query . '%')
                 ->whereHas('categories', function ($q) use ($domain, $isFake) {
                     $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                         ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
@@ -42,7 +42,7 @@ class SearchController extends Controller
                 ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
                 ->where('web_site',$domain)
                 ->where('categories.turn_to_fake_cate',$isFake)
-                ->where('name', 'LIKE','%' . $query . '%')
+                ->where('name', 'like', '%' . $query . '%')
                 ->take(20)
                 ->get();
             if($cate->isEmpty()){
@@ -54,7 +54,7 @@ class SearchController extends Controller
                     ->get();
             }
         }else{
-            $ringtones=Ringtone::where('name', 'LIKE','%' . $query . '%')
+            $ringtones= Ringtone::where('name', 'like', '%' . $query . '%')
                 ->whereHas('categories', function ($q) use ($domain, $isFake) {
                     $q->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                         ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
@@ -77,7 +77,7 @@ class SearchController extends Controller
                 ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
                 ->where('web_site',$domain)
                 ->where('categories.turn_to_fake_cate',$isFake)
-                ->where('name', 'LIKE','%' . $query . '%')
+                ->where('name', 'like', '%' . $query . '%')
                 ->take(20)
                 ->get();
             if($cate->isEmpty()){
