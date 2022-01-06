@@ -90,7 +90,6 @@ class SearchController extends Controller
                     ->get();
             }
         }
-        dd($ringtones);
         Log::error('Ring : '.$ringtones);
         Log::error('Cate: '.$cate);
         Log::error($request->all());
