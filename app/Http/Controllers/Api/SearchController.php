@@ -88,7 +88,6 @@ class SearchController extends Controller
                     ->get();
             }
         }
-        dd($cate);
         return [
             'cates_result' =>  CategoryResource::collection($cate),
             'ringtones_result' => RingtoneResource::collection($ringtones)
