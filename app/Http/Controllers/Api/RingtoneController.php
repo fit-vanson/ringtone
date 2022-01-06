@@ -15,6 +15,7 @@ use App\Models\SiteManage;
 use App\Models\Visitor;
 use App\Models\VisitorFavorite;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 
 class RingtoneController extends Controller
@@ -243,7 +244,7 @@ class RingtoneController extends Controller
 
     public function getRingtonesByCate($id, $deviceId)
     {
-//        try{
+        try{
         $domain=$_SERVER['SERVER_NAME'];
         $sort = SiteManage::where('web_site',$domain)->first();
 //        dd($sort->load_wallpapers);
@@ -329,10 +330,11 @@ class RingtoneController extends Controller
         }
         $ringtones = $this->checkLikedToRingtones($deviceId, $data);
         $getResource = RingtoneResource::collection($ringtones);
+            Log::error($getResource);
         return $getResource;
-//        }catch (\Exception $e){
-//            return response()->json(['warning' => ['This Category is not exist']], 200);
-//        }
+        }catch (\Exception $e){
+            return response()->json(['warning' => ['This Category is not exist']], 200);
+        }
 
     }
 
