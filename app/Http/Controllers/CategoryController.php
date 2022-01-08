@@ -8,9 +8,11 @@ use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use mysql_xdevapi\Exception;
 use Spatie\Permission\Models\Role;
 
 class CategoryController extends Controller
@@ -46,14 +48,14 @@ class CategoryController extends Controller
 
 
         // Total records
-        $totalRecords = CategoryManage::select('count(*) as allcount')->count();
+        $totalRecords = CategoryManage::select('count(*) as allcount')->where('id', '<>', 1)->count();
         $totalRecordswithFilter = CategoryManage::select('count(*) as allcount')
             ->where('name', 'like', '%' . $searchValue . '%')
+            ->where('id', '<>', 1)
             ->count();
-
-
         // Get records, also we have included search filter as well
-        $records = CategoryManage::with('ringtone','site')->orderBy($columnName, $columnSortOrder)
+        $records = CategoryManage::with('ringtone','site')
+            ->orderBy($columnName, $columnSortOrder)
             ->where('name', 'like', '%' . $searchValue . '%')
             ->where('id', '<>', 1)
             ->select('*')
@@ -224,6 +226,14 @@ class CategoryController extends Controller
             return response()->json(['error'=>'Không thể xoá.']);
         }else{
             $category = CategoryManage::find($id);
+            $pathRemove    =   storage_path('app/public/categories/').$category->image;
+            try {
+                if(file_exists($pathRemove)){
+                    unlink($pathRemove);
+                }
+            }catch (Exception $ex) {
+                Log::error($ex->getMessage());
+            }
             $category->delete();
             return response()->json(['success'=>'Xóa thành công.']);
         }

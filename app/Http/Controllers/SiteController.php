@@ -14,9 +14,11 @@ use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use mysql_xdevapi\Exception;
 use Spatie\Permission\Models\Role;
 
 class SiteController extends Controller
@@ -78,7 +80,8 @@ class SiteController extends Controller
 //            dd($record);
             $cate_name = [];
             foreach ($record->category as $category){
-                $cate_name[] =$category->name;
+                $cate_name[] = $category->name;
+
             }
             $data_arr[] = array(
                 "id" => $record->id,
@@ -139,7 +142,6 @@ class SiteController extends Controller
         $path_image =  $monthYear.'/'.$fileNameToStore;
         $data['header_image'] = $path_image;
         $data->save();
-        $data->category()->attach($request->select_category);
         return response()->json(['success'=>'Thêm mới thành công']);
     }
     public function update(Request $request){
@@ -196,6 +198,14 @@ class SiteController extends Controller
     public function delete($id)
     {
         $site = SiteManage::find($id);
+        $pathRemove    =   storage_path('app/public/sites/').$site->header_image;
+        try {
+            if(file_exists($pathRemove)){
+                unlink($pathRemove);
+            }
+        }catch (Exception $ex) {
+            Log::error($ex->getMessage());
+        }
         $site->category()->detach();
         $site->delete();
         return response()->json(['success'=>'Xóa thành công.']);
@@ -300,6 +310,7 @@ class SiteController extends Controller
         echo json_encode($response);
     }
     public function site_addCategory(Request $request,$id){
+//        dd($request->all());
         $site = SiteManage::where('web_site',$id)->first();
         $site->category()->sync($request->select_category);
         $site->save();

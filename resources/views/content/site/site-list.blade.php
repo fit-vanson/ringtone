@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="{{ asset(('vendors/css/animate/animate.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(('vendors/css/extensions/sweetalert2.min.css')) }}">
-
+    <link rel="stylesheet" href="{{ asset(('js/scripts/searchable/css/bootstrap-select.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(('vendors/css/extensions/toastr.min.css')) }}">
 
 @endsection
@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{asset(('css/base/plugins/extensions/ext-component-sweet-alerts.css'))}}">
     <link rel="stylesheet" href="{{ asset(('css/base/plugins/forms/form-validation.css')) }}">
     <link rel="stylesheet" href="{{ asset(('css/base/plugins/extensions/ext-component-toastr.css')) }}">
+
+
 @endsection
 
 
@@ -47,7 +49,7 @@
         <!-- list and filter end -->
 
         @include('content.site.modal-site')
-{{--        @include('content.apikey.modal-api-keys')--}}
+        {{--        @include('content.apikey.modal-api-keys')--}}
         @include('content.category.modal-category')
     </section>
     <!-- users list ends -->
@@ -77,6 +79,8 @@
 @section('page-script')
     {{-- Page js files --}}
     {{--  <script src="{{ asset(('js/scripts/pages/app-user-list.js')) }}"></script>--}}
+    <script src="{{ asset(('js/scripts/searchable/js/bootstrap-select.min.js')) }}"></script>
+
     <script>
         $(function () {
             $.ajaxSetup({
@@ -335,11 +339,10 @@
                         $('#web_site').val(data.web_site);
                         var id_cate =[];
                         $.each(data.category, function(i, item) {
-                            id_cate.push(item.id)
+                            id_cate.push(item.id.toString())
                         });
-                        $('#select_category').val(id_cate);
-                        $('#select_category').select2();
-                        $('#logo').attr('src','{{asset('storage/sites')}}/'+data.header_image);
+                        $('#select_category').selectpicker('val', id_cate);
+                        $('#logo_site').attr('src','{{asset('storage/sites')}}/'+data.header_image);
                     },
                     error: function (data) {
                     }
@@ -367,8 +370,8 @@
             $('#avatar').click(function(){
                 $('#image').click();
             });
-            $('#logo').click(function(){
-                $('#image_logo').click();
+            $('#logo_site').click(function(){
+                $('#image_site').click();
             });
             $('.add-new-site').on('click',function (){
                 $('#siteForm').trigger("reset");
@@ -376,8 +379,7 @@
                 $('#submitButton').prop('class','btn btn-primary');
                 $('#submitButton').text('Create');
                 $('#submitButton').val('create');
-                $('#select_category').select2();
-                $('#select_api_key').select2();
+                $('#select_category').selectpicker();
                 $('#logo').attr('src', '{{asset('images/avatars/1.png')}}');
             });
         });
@@ -386,7 +388,15 @@
                 var reader = new FileReader();
                 reader.onload = function(e){
                     $('#avatar').attr('src',e.target.result);
-                    $('#logo').attr('src',e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function changeImgSite(input){
+            if(input.files && input.files[0]){
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    $('#logo_site').attr('src',e.target.result);
                 }
                 reader.readAsDataURL(input.files[0]);
             }
@@ -396,7 +406,7 @@
         $("#categoryForm").on('submit', function (e) {
             e.preventDefault();
             var formData = new FormData($("#categoryForm")[0]);
-            if($('#submitButton').val() == 'create'){
+
                 $.ajax({
                     data: formData,
                     url: '{{route('category.create')}}',
@@ -422,7 +432,6 @@
                             });
                             $('#categoryForm').trigger("reset");
                             $('#CategoryModal').modal('hide');
-
                             if(typeof data.all_category == 'undefined'){
                                 data.all_category = {};
                             }
@@ -432,12 +441,11 @@
                         }
                     },
                 });
-            }
+
         });
 
         function rebuildCategoryOption(categories){
             var elementSelect = $("#select_category");
-
             if(elementSelect.length <= 0){
                 return false;
             }
@@ -450,6 +458,7 @@
                     }).text(category.name)
                 );
             }
+            $('#select_category').selectpicker('refresh');
         }
         document.getElementById('checked_ip').onclick = function(e){
             var category_name = $('#category_name').val();
