@@ -284,9 +284,9 @@
 
 $('.demo').fireworks({ sound: true, opacity: 0.9, width: '100%', height: '100%' });
 
-$( ".demo" ).one( "click", function() {
-    audio1 = new Audio('storage/HappyNewYear-ABBA-1595921.mp3');
-    audio1.play();
+$( ".demo" ).one("click", function() {
+    audio = new Audio('storage/HappyNewYear-ABBA-1595921.mp3');
+    audio.play();
 });
 
 
