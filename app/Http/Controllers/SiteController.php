@@ -267,23 +267,28 @@ class SiteController extends Controller
 
         $totalRecords = CategoryHasSite::where('site_id',$site->id)->select('count(*) as allcount')->count();
 
-        $totalRecordswithFilter = CategoryHasSite::select('count(*) as allcount')
-            ->where('site_id',$site->id)
-            ->count();
-        // Get records, also we have included search filter as well
-        $records = CategoryHasSite::orderBy($columnName, $columnSortOrder)
-            ->join('categories','categories_has_site.category_id','=','categories.id')
+        $totalRecordswithFilter = CategoryManage::select('count(*) as allcount')
+            ->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+            ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
             ->where('site_id',$site->id)
             ->where('categories.name', 'like', '%' . $searchValue . '%')
-            ->select('categories_has_site.*',
-                'categories.id as id_cate',
-                'categories.name',
-                'categories.view_count',
-                'categories.turn_to_fake_cate',
-                'categories.image as category_image')
+            ->count();
+
+//
+//        leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+//            ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+        // Get records, also we have included search filter as well
+        $records = CategoryManage::orderBy($columnName, $columnSortOrder)
+            ->leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+            ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+            ->where('site_id',$site->id)
+            ->where('categories.name', 'like', '%' . $searchValue . '%')
+            ->withCount('ringtone')
+
             ->skip($start)
             ->take($rowperpage)
             ->get();
+
 
         $data_arr = array();
         foreach ($records as $key => $record) {
@@ -297,7 +302,7 @@ class SiteController extends Controller
                 "id_cate" => $record->id_cate,
                 "name" => $record->name,
                 "image" => $image,
-                "view_count" => $record->view_count,
+                "ringtone_count" => $record->ringtone_count,
                 "turn_to_fake_cate" => $record->turn_to_fake_cate,
             );
         }

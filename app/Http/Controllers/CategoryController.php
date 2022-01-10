@@ -49,28 +49,30 @@ class CategoryController extends Controller
 
         // Total records
         $totalRecords = CategoryManage::select('count(*) as allcount')->where('id', '<>', 1)->count();
+
         $totalRecordswithFilter = CategoryManage::select('count(*) as allcount')
             ->where('name', 'like', '%' . $searchValue . '%')
             ->where('id', '<>', 1)
             ->count();
         // Get records, also we have included search filter as well
         $records = CategoryManage::with('ringtone','site')
+            ->withCount('ringtone')
             ->orderBy($columnName, $columnSortOrder)
             ->where('name', 'like', '%' . $searchValue . '%')
             ->where('id', '<>', 1)
-            ->select('*')
             ->skip($start)
             ->take($rowperpage)
             ->get();
+//        dd($records);
         $data_arr = array();
         foreach ($records as $key => $record) {
-            $image_count = '<a href="/admin/ringtones?category='.$record->name.'"> <span>'.$record->ringtone->count().'</span></a>';
+            $image_count = '<a href="/admin/ringtones?category='.$record->name.'"> <span>'.$record->ringtone_count.'</span></a>';
             $data_arr[] = array(
                 "id" => $record->id,
                 "name" => $record->name,
                 "image" => $record->image,
                 "view_count" => $record->view_count,
-                "image_count" => $image_count,
+                "ringtone_count" => $image_count,
                 "turn_to_fake_cate" => $record->turn_to_fake_cate,
             );
         }

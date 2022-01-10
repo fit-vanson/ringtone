@@ -37,7 +37,7 @@
               <th>Name</th>
               <th>View Count</th>
               <th>Real</th>
-              <th>Count Image</th>
+              <th>Count Ringtone</th>
               <th>Actions</th>
           </tr>
         </thead>
@@ -120,7 +120,7 @@
                   { data: 'name' },
                   { data: 'view_count' },
                   { data: 'turn_to_fake_cate' },
-                  { data: 'image_count' },
+                  { data: 'ringtone_count' },
                   { data: 'action' }
               ],
               columnDefs: [
