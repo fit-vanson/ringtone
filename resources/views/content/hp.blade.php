@@ -13,7 +13,6 @@
 <body>
 
 <div class="loader">
-    <iframe src="https://www.nhaccuatui.com/mh/background/WwaehzZ8yV" width="1" height="1" frameborder="0" allowfullscreen allow="autoplay"></iframe>
     <div class="fireworks">
         <div class="demo">
             <canvas id="fireworksField" width="1366" height="379" style="position: absolute; top: 0px; left: 0px; opacity: 0.9;"></canvas>
