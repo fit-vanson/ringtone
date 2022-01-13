@@ -94,7 +94,6 @@ class RingtoneController extends Controller
         }
 
         $load_feature=$site->load_home_features;
-        dd($load_feature);
         $isFake = 0;
         if (checkBlockIp()) {
             $isFake = 1;
