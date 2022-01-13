@@ -36,7 +36,7 @@
                     </li>
                     <li class="mb-75 site_adss">
                         <span class="fw-bolder me-25">ADs:</span>
-                        @if($site->ad_switch ==1)
+                        @if($site->ad_switch ==0)
                             <a data-id="{{$site->id}}" class="badge bg-light-success changeAds">Active</a>
                         @else
                             <a data-id="{{$site->id}}" class="badge bg-light-danger changeAds">Deactivated</a>

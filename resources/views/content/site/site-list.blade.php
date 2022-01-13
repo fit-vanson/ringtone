@@ -132,8 +132,8 @@
                             var $assignedTo = data,
                                 $output = '';
                             var realBadgeObj = {
-                                0:'<a data-id="'+full.id+'" class="badge rounded-pill badge-light-danger changeAds">Deactivated</a>',
-                                1:'<a data-id="'+full.id+'" class="badge rounded-pill badge-light-success changeAds">Active</a>',
+                                1:'<a data-id="'+full.id+'" class="badge rounded-pill badge-light-danger changeAds">Deactivated</a>',
+                                0:'<a data-id="'+full.id+'" class="badge rounded-pill badge-light-success changeAds">Active</a>',
                             };
                             $output = realBadgeObj[data];
                             return $output
