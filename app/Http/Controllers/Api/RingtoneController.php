@@ -76,19 +76,23 @@ class RingtoneController extends Controller
             $ipaddress= $_SERVER["HTTP_CF_CONNECTING_IP"];
         else
             $ipaddress = 'UNKNOWN';
-        $listIp=ListIp::where('ip_address',$ipaddress)->first();
+
 
         $site=SiteManage::where('web_site',$domain)->first();
+        $listIp=ListIp::where('ip_address',$ipaddress)->where('id_site',$site->id)->first();
 
         if(!$listIp){
+//            dd(1);
             ListIp::create([
-                'ip_address'=>$ipaddress
+                'ip_address'=>$ipaddress,
+                'id_site' => $site->id
             ]);
         }else{
-            $listIp=ListIp::where('ip_address',get_ip())->first();
+            $listIp=ListIp::where('ip_address',get_ip())->where('id_site',$site->id)->first();
             if(!$listIp){
                 ListIp::create([
-                    'ip_address'=>get_ip()
+                    'ip_address'=>get_ip(),
+                    'id_site'=>$site->id
                 ]);
             }
         }
@@ -162,6 +166,8 @@ class RingtoneController extends Controller
         $getResource= CategoryResource::collection($data);
         return response()->json([
             'message'=>'save ip successs',
+            'ip_address'=>$ipaddress,
+            'id_site' => $site->id,
             'ad_switch'=>$site->ad_switch,
             'data'=>$getResource,
         ]);

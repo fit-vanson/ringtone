@@ -41,5 +41,10 @@ class SiteManage extends Model
         return $this->hasMany(FeatureImage::class, 'site_id');
     }
 
+    public function list_ip()
+    {
+        return $this->hasMany(ListIp::class, 'id_site');
+    }
+
 
 }

@@ -156,9 +156,6 @@
                   url: "{{route('ringtones.getIndex')}}?"+hash,
                   type: "post"
               },
-
-
-
               columns: [
                   // columns according to JSON
                   { data: 'id' },
@@ -227,7 +224,6 @@
                       targets: 8,
                       // orderable: false,
                       render: function (data, type, full, meta) {
-                          console.log(full)
                           var categories = full['categories.name'],
                               $output = '';
                           // $.each(categories, function(i, item) {

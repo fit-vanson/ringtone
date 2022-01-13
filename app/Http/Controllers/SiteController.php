@@ -9,8 +9,10 @@ use App\Models\CategoryHasSite;
 use App\Models\CategoryHasWallpaper;
 use App\Models\CategoryManage;
 use App\Models\FeatureImage;
+use App\Models\ListIp;
 use App\Models\SiteManage;
 use App\Models\User;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -670,15 +672,11 @@ class SiteController extends Controller
         $pageConfigs = [
             'pageHeader' => false,
         ];
-        $users = $this->user->all();
-        $roles = $this->role->all();
         $categories = CategoryManage::all();
         $blockIps = BlockIP::all();
 
         return view('content.site.site-view-load-feature', [
             'pageConfigs' => $pageConfigs,
-            'users'=>$users,
-            'roles'=>$roles,
             'categories' => $categories,
             'blockIps' => $blockIps,
             'site' =>$site
@@ -694,6 +692,92 @@ class SiteController extends Controller
         if(isset($request->load_wallpapers)){
             SiteManage::where('web_site',$id)->update(['load_wallpapers'=>$request->load_wallpapers]);
             return response()->json(['success'=>'Cập nhật thành công']);
+        }
+    }
+
+    //====================================================================
+
+    public function site_listIP($id){
+        $site = SiteManage::with('category')->where('web_site',$id)->first();
+        $pageConfigs = [
+            'pageHeader' => false,
+        ];
+        $categories = CategoryManage::all();
+        $blockIps = BlockIP::all();
+
+        return view('content.site.site-view-list-ip', [
+            'pageConfigs' => $pageConfigs,
+            'categories' => $categories,
+            'blockIps' => $blockIps,
+            'site' =>$site
+        ]);
+
+    }
+
+    public function getSite_listIP(Request $request,$id){
+        $site = SiteManage::with('list_ip')->where("web_site",$id)->first();
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+        $totalRecords = count($site->list_ip);
+        $totalRecordswithFilter = SiteManage::with('list_ip')->select('count(*) as allcount')
+            ->leftJoin('list_ips', 'list_ips.id_site', '=', 'sites.id')
+            ->where('list_ips.ip_address', 'like', '%' . $searchValue . '%')
+            ->where('sites.id',$site->id)
+            ->count();
+
+        // Get records, also we have included search filter as well
+        $records = SiteManage::orderBy($columnName, $columnSortOrder)
+            ->with('list_ip')
+            ->leftJoin('list_ips', 'list_ips.id_site', '=', 'sites.id')
+            ->where('list_ips.ip_address', 'like', '%' . $searchValue . '%')
+            ->where('sites.id',$site->id)
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+        $data_arr = array();
+        foreach ($records as $key => $record) {
+            $data_arr[] = array(
+                "id" => $record->id,
+                "ip_address" => $record->ip_address,
+                "updated_at" => $record->updated_at,
+            );
+        }
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+        echo json_encode($response);
+    }
+    public function site_deleteIP($id,$ip_id){
+        ListIp::where('id',$ip_id)->delete();
+        return response()->json(['success'=>'Xóa thành công.']);
+    }
+
+    public function deleteMorethan($id){
+        $site = SiteManage::where('web_site',$id)->first();
+        $site_id = $site->id;
+        $list = ListIp::where('id_site',$site_id)->where('updated_at','<', Carbon::now()->subDays(30))->count();
+        if($list> 0){
+            ListIp::where('id_site',$site_id)->where('updated_at','<', Carbon::now()->subDays(30))->delete();
+            return response()->json(['success'=>'Xóa thành công.']);
+        }else{
+            return response()->json(['error'=>'Không có dữ liệu.']);
         }
     }
 
