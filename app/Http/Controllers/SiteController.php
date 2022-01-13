@@ -715,7 +715,7 @@ class SiteController extends Controller
     }
 
     public function getSite_listIP(Request $request,$id){
-        $site = SiteManage::with('list_ip')->where("web_site",$id)->first();
+        $site = SiteManage::where("web_site",$id)->first();
 
         $draw = $request->get('draw');
         $start = $request->get("start");
