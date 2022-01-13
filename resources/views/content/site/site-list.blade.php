@@ -114,7 +114,7 @@
                         responsivePriority: 4,
                         render: function (data, type, full, meta) {
                             var $output =
-                                '<a href="//'+full['site_name']+'" target="_blank" ><div class="avatar"><img src="{{asset('storage/sites')}}/'+data+'" alt="Avatar" height="100" width="100"></div></a>';
+                                '<a href="//'+full['web_site']+'" target="_blank" ><div class="avatar"><img src="{{asset('storage/sites')}}/'+data+'" alt="Avatar" height="100" width="100"></div></a>';
                             return $output;
                         }
                     },
