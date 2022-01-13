@@ -94,6 +94,7 @@ class RingtoneController extends Controller
         }
 
         $load_feature=$site->load_home_features;
+        dd($load_feature);
         $isFake = 0;
         if (checkBlockIp()) {
             $isFake = 1;
@@ -119,6 +120,13 @@ class RingtoneController extends Controller
                     ->where('categories.turn_to_fake_cate',$isFake)
                     ->select('categories.*')
                     ->orderBy('view_count', 'desc')->get();
+            }elseif($load_feature ==3){
+                $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                    ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                    ->where('web_site',$domain)
+                    ->where('categories.turn_to_fake_cate',$isFake)
+                    ->select('categories.*')
+                    ->orderBy('view_count', 'desc')->get();
             }
         } else {
             if($load_feature ==0){
@@ -137,6 +145,13 @@ class RingtoneController extends Controller
                     ->orderBy('order', 'desc')->get();
 
             }elseif($load_feature ==2){
+                $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
+                    ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
+                    ->where('web_site',$domain)
+                    ->where('categories.turn_to_fake_cate',$isFake)
+                    ->select('categories.*')
+                    ->orderBy('view_count', 'desc')->get();
+            }elseif($load_feature ==3){
                 $data = CategoryManage::leftJoin('categories_has_site', 'categories_has_site.category_id', '=', 'categories.id')
                     ->leftJoin('sites', 'sites.id', '=', 'categories_has_site.site_id')
                     ->where('web_site',$domain)
