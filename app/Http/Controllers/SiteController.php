@@ -731,7 +731,7 @@ class SiteController extends Controller
         $columnName = $columnName_arr[$columnIndex]['data']; // Column name
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
         $searchValue = $search_arr['value']; // Search value
-        $totalRecords = ListIp::where("id_site",$site->id)->count();
+        $totalRecords = 1;
         $totalRecordswithFilter = SiteManage::with('list_ip')->select('count(*) as allcount')
             ->leftJoin('list_ips', 'list_ips.id_site', '=', 'sites.id')
             ->where('list_ips.ip_address', 'like', '%' . $searchValue . '%')
