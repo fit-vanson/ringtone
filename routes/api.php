@@ -32,7 +32,7 @@ Route::get('/test-api',function (){
 });
 
 Route::group([
-//    'middleware' => 'auth.apikey'
+    'middleware' => 'auth.apikey'
     ], function() {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/popular', [CategoryController::class, 'getPopulared']);
