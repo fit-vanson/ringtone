@@ -15,6 +15,11 @@ data-asset-path="{{ asset('/')}}">
   @endif
   <!-- END: Main Menu-->
 
+{{--      <img class="hoa_img"  src="{{asset('images/hp/hoa_1.png')}}">--}}
+      <img class="bg_img"  src="{{asset('images/hp/bg.png')}}">
+{{--      <img class="long_den"  src="{{asset('images/hp/long_den-1.png')}}">--}}
+
+
   <!-- BEGIN: Content-->
   <div class="app-content content {{ $configData['pageClass'] }}">
     <!-- BEGIN: Header-->
