@@ -10,6 +10,15 @@
 <script src="{{ asset(('js/core/app-menu.js')) }}"></script>
 <script src="{{ asset(('js/core/app.js')) }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ELVQREVQ64"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-ELVQREVQ64');
+</script>
 
 <!-- custome scripts file for user -->
 <script src="{{ asset(('js/core/scripts.js')) }}"></script>
