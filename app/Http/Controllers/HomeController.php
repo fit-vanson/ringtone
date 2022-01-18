@@ -70,49 +70,6 @@ class HomeController extends Controller
     public function home()
     {
 
-        $analytics = app(\Spatie\Analytics\Analytics::class);
-        $total_visitors = $analytics->fetchVisitorsAndPageViews(Period::days(15));
-
-//        $pages = Analytics::fetchMostVisitedPages(Period::days(1));
-//        dd($pages);
-//        $total_visitors = Analytics::fetchTotalVisitorsAndPageViews(Period::days(7));
-        dd($total_visitors);
-
-
-        $startDate = Carbon::now()->subYear();
-        dd(Analytics::getAnalyticsService());
-        $endDate = Carbon::now();
-        $a = Period::create($startDate, $endDate);
-        // $analytics = $analytics->fetchMostVisitedPages(Period::days(1));
-
-
-        dd($a);
-
-
-        $key     = new APIKey('ngocphandang@yahoo.com.vn', 'f4fb1dd91d4a7abce9460fe85f0cec82a6a69');
-        $adapter = new Guzzle($key);
-        $user    = new \Cloudflare\API\Endpoints\User($adapter);
-//        dd($user->getUserID());
-        $DNSAnalytics = new DNSAnalytics($adapter);
-        $DNS = new DNS($adapter);
-        $zoneID = '66ba85f3ec062939ed1098ffd82838e1';
-        $dimensions = ["responseCode"]; //'queryName',
-        $metrics = [ 'queryCount' ];
-        $sort = [ ""];
-
-//        adcc81574262d4b0cb57de58f6ed9967
-
-
-
-//        $dataSet = new HttpRequestsSum();
-
-//        $until = '2022-01-14T23:59:00Z';
-        $until = Carbon::now()->toISOString(); //toISOString  ,toAtomString
-//        dd($until);
-        $since = Carbon::now()->subHour(6)->toISOString();  //subHour
-
-//        dd($DNS->getRecordDetails($zoneID,'2960611a52aa4a9619c7452bef1f389d'));
-        //dd($DNSAnalytics->getReportTable($zoneID,$dimensions,$metrics,$sort,'',$since,$until,100));
         return view('content.home');
     }
 
