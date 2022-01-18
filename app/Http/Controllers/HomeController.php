@@ -26,10 +26,7 @@ use Monolog\Logger;
 //use Spatie\Analytics\Analytics;
 //use Analytics;
 
-use Spatie\Permission\Models\Role;
-use Spatie\Analytics\Period;
-use Spatie\Analytics\Analytics;
-use Spatie\Analytics\AnalyticsFacade;
+
 //use Wappr\Cloudflare\AnalyticsClient;
 //use Wappr\Cloudflare\Resources\Account;
 //use Wappr\Cloudflare\DataSets\HttpRequests\HttpRequests1dGroups;
