@@ -21,6 +21,11 @@ class CategoryManage extends Model
         return $this->belongsToMany(Ringtone::class,'category_has_ringtones','category_id','ringtone_id');
     }
 
+    public function vzt()
+    {
+        return visits($this);
+    }
+
 
     public static function booted()
     {

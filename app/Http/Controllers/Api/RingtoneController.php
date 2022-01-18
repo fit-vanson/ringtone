@@ -79,7 +79,7 @@ class RingtoneController extends Controller
 
 
         $site=SiteManage::where('web_site',$domain)->first();
-        $listIp=ListIp::where('ip_address',$ipaddress)->where('id_site',$site->id)->first();
+        $listIp=ListIp::where('ip_address',$ipaddress)->where('id_site',$site->id)->where('created_at',Carbon::now())->first();
 
         if(!$listIp){
 //            dd(1);
@@ -88,7 +88,7 @@ class RingtoneController extends Controller
                 'id_site' => $site->id
             ]);
         }else{
-            $listIp=ListIp::where('ip_address',get_ip())->where('id_site',$site->id)->first();
+            $listIp=ListIp::where('ip_address',get_ip())->where('id_site',$site->id)->where('created_at',Carbon::now())->first();
             if(!$listIp){
                 ListIp::create([
                     'ip_address'=>get_ip(),

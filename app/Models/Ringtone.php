@@ -27,5 +27,9 @@ class Ringtone extends Model
     public function categories(){
         return $this->belongsToMany(CategoryManage::class, 'category_has_ringtones', 'ringtone_id', 'category_id');
     }
+    public function vzt()
+    {
+        return visits($this);
+    }
 
 }

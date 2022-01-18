@@ -90,6 +90,13 @@ return [
             'prefix_indexes' => true,
         ],
 
+
+        'laravel-visits' => [
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'password' => env('DB_PASSWORD', ''),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'forge'),
+        ],
     ],
 
     /*

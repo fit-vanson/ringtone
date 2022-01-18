@@ -3,11 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\CategoryResource;
-use App\Http\Resources\WallpaperResource;
-use App\Models\BlockIp;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\CategoryManage;
 use App\Models\SiteManage;
 
 

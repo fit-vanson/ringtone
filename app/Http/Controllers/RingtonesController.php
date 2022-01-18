@@ -75,7 +75,6 @@ class RingtonesController extends Controller
 
         $data_arr = array();
         foreach ($records as $key => $record) {
-//            dd($record);
             $cate_name = [];
             foreach ($record->categories as $category){
                 $cate_name[] =$category->name;
@@ -86,7 +85,6 @@ class RingtonesController extends Controller
                 "feature" => $record->feature,
                 "set_as_premium" => $record->set_as_premium,
                 "ringtone_file" => $record->ringtone_file,
-//                "ringtone_file" => '<audio id="plyr-audio-player" class="audio-player" controls><source src="https://cdn.plyr.io/static/demo/Kishi_Bashi_-_It_All_Began_With_a_Burst.mp3" type="audio/mp3"/></audio>',
                 "thumbnail_image" => $record->thumbnail_image,
                 "view_count" => $record->view_count,
                 "like_count" => $record->like_count,

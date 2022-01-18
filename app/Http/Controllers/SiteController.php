@@ -164,7 +164,7 @@ class SiteController extends Controller
         $data->site_name = $request->site_name;
         $data->web_site = $request->web_site;
         if( $request->image_logo){
-            $path_Remove =   storage_path('app/public/sites/').$data->logo;
+            $path_Remove =   storage_path('app/public/sites/').$data->header_image;
             if(file_exists($path_Remove)){
                 unlink($path_Remove);
             }

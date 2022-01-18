@@ -16,6 +16,7 @@ use Cloudflare\API\Endpoints\DNSAnalytics;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use ImageOrientationFix\ImageOrientationFixer;
@@ -23,13 +24,17 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Monolog\Logger;
 //use Spatie\Analytics\Analytics;
-use Spatie\Analytics\Period;
+//use Analytics;
+
 use Spatie\Permission\Models\Role;
+use Spatie\Analytics\Period;
+use Spatie\Analytics\Analytics;
+use Spatie\Analytics\AnalyticsFacade;
 //use Wappr\Cloudflare\AnalyticsClient;
 //use Wappr\Cloudflare\Resources\Account;
 //use Wappr\Cloudflare\DataSets\HttpRequests\HttpRequests1dGroups;
 //use Wappr\Cloudflare\SelectionSets\HttpRequests\HttpRequestsSum;
-use Spatie\Analytics\AnalyticsFacade as Analytics; //Change here
+//use Spatie\Analytics\AnalyticsFacade as Analytics; //Change here
 
 class HomeController extends Controller
 {
@@ -64,8 +69,24 @@ class HomeController extends Controller
 
     public function home()
     {
-        $analytics = Analytics::fetchMostVisitedPages(Period::days(1));
-        dd($analytics);
+
+        $analytics = app(\Spatie\Analytics\Analytics::class);
+        $total_visitors = $analytics->fetchVisitorsAndPageViews(Period::days(15));
+
+//        $pages = Analytics::fetchMostVisitedPages(Period::days(1));
+//        dd($pages);
+//        $total_visitors = Analytics::fetchTotalVisitorsAndPageViews(Period::days(7));
+        dd($total_visitors);
+
+
+        $startDate = Carbon::now()->subYear();
+        dd(Analytics::getAnalyticsService());
+        $endDate = Carbon::now();
+        $a = Period::create($startDate, $endDate);
+        // $analytics = $analytics->fetchMostVisitedPages(Period::days(1));
+
+
+        dd($a);
 
 
         $key     = new APIKey('ngocphandang@yahoo.com.vn', 'f4fb1dd91d4a7abce9460fe85f0cec82a6a69');
@@ -91,9 +112,15 @@ class HomeController extends Controller
         $since = Carbon::now()->subHour(6)->toISOString();  //subHour
 
 //        dd($DNS->getRecordDetails($zoneID,'2960611a52aa4a9619c7452bef1f389d'));
-        dd($DNSAnalytics->getReportTable($zoneID,$dimensions,$metrics,$sort,'',$since,$until,100));
+        //dd($DNSAnalytics->getReportTable($zoneID,$dimensions,$metrics,$sort,'',$since,$until,100));
         return view('content.home');
     }
+
+    public function facade()
+    {
+        return AnalyticsFacade::fetchMostVisitedPages(Period::days(7));
+    }
+
 
     public function file()
     {
