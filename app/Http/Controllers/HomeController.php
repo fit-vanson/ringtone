@@ -76,6 +76,7 @@ class HomeController extends Controller
         foreach ($sites as $site){
             if($date == 'inMonth' ){
                 $data_arr[] = array(
+                    'id' => $site->id,
                     'logo' => $site->header_image,
                     'site_name' => $site->site_name,
                     'web_site' => $site->web_site,
@@ -86,6 +87,7 @@ class HomeController extends Controller
                 );
             }elseif ($date == 'inWeek'){
                 $data_arr[] = array(
+                    'id' => $site->id,
                     'logo' => $site->header_image,
                     'site_name' => $site->site_name,
                     'web_site' => $site->web_site,
@@ -96,6 +98,7 @@ class HomeController extends Controller
                 );
             }else{
                 $data_arr[] = array(
+                    'id' => $site->id,
                     'logo' => $site->header_image,
                     'site_name' => $site->site_name,
                     'web_site' => $site->web_site,
