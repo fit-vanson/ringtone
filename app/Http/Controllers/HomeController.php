@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryManage;
 use App\Models\FeatureImage;
+use App\Models\ListIp;
+use App\Models\Ringtone;
 use App\Models\SiteManage;
 use App\Models\User;
+use App\Models\Wallpapers;
+use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 
 
@@ -41,12 +46,68 @@ class HomeController extends Controller
 
     public function home()
     {
-        return view('content.home');
+        $categories = CategoryManage::all();
+        $ringtones = Ringtone::all();
+        $sites = SiteManage::all();
+        $topViews = $this->topView();
+
+
+        return view('content.home')->with(compact(
+            'categories',
+            'ringtones',
+            'sites',
+            'topViews'
+
+        ));
     }
 
     public function file()
     {
         return view('content.file.index');
+    }
+
+    public function topView(){
+        $date =request()->time;
+//        dd(request()->time);
+//        $date =
+        $now = Carbon::now();
+        $sites = SiteManage::all();
+        $data_arr = array();
+        foreach ($sites as $site){
+            if($date == 'inMonth' ){
+                $data_arr[] = array(
+                    'logo' => $site->header_image,
+                    'site_name' => $site->site_name,
+                    'web_site' => $site->web_site,
+                    'count' => ListIp::where('id_site',$site->id)->whereBetween('created_at', [
+                        $now->startOfMonth()->format('Y-m-d'), //This will return date in format like this: 2022-01-10
+                        $now->endOfMonth()->format('Y-m-d')
+                    ])->count()
+                );
+            }elseif ($date == 'inWeek'){
+                $data_arr[] = array(
+                    'logo' => $site->header_image,
+                    'site_name' => $site->site_name,
+                    'web_site' => $site->web_site,
+                    'count' => ListIp::where('id_site',$site->id)->whereBetween('created_at', [
+                        $now->startOfWeek()->format('Y-m-d'), //This will return date in format like this: 2022-01-10
+                        $now->endOfWeek()->format('Y-m-d')
+                    ])->count()
+                );
+            }else{
+                $data_arr[] = array(
+                    'logo' => $site->header_image,
+                    'site_name' => $site->site_name,
+                    'web_site' => $site->web_site,
+                    'count' => ListIp::where('id_site',$site->id)->whereDate('created_at', Carbon::today())->count()
+                );
+            }
+        }
+        usort($data_arr, function($a, $b) {
+            return $b['count'] <=> $a['count'];
+        });
+        $data_arr = array_slice($data_arr, 0, 5);
+        return $data_arr;
     }
 
 }

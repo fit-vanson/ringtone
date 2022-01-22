@@ -82,6 +82,7 @@ Route::group([ "prefix" => "admin", "middleware" => ["auth"]], function() {
 
     Route::group([ "prefix" => "home", "middleware" => ["auth"]], function() {
         Route::get('/', [HomeController::class, 'index'])->name('home.index');
+        Route::get('/topView', [HomeController::class, 'topView'])->name('home.topView');
 //        Route::post('/getIndex', [HomeController::class, 'getIndex'])->name('home.getIndex');
 //        Route::post('/create', [HomeController::class, 'create'])->name('home.create');
 //        Route::post('/update', [HomeController::class, 'update'])->name('home.update');
